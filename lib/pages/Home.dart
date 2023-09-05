@@ -15,32 +15,33 @@ class Home extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(
-                height: 25,
-              ),
-              const SizedBox(
-                height: 25,
-              ),
+              const SizedBox(height: 250),
               const Text(
                 "Hitori",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.black,
-                  fontSize: 30,
+                  fontSize: 40,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              Image.asset('assets/hitori-game.png'),
-              const SizedBox(height: 25),
+              const SizedBox(height: 30),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(10.0),
+                child:  const Image(
+                    image: AssetImage('assets/hitori-game.png'),
+                    height: 150,
+                    width: 150,
+                  ),
+              ),
+              const SizedBox(height: 100),
               SizedBox(
-                width: 150.0,
-                height: 75.0,
+                width: 120,
+                height: 60.0,
                 child: TextButton(
                   style: ButtonStyle(
-                    foregroundColor:
-                        MaterialStateProperty.all<Color>(Colors.white),
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.black),
+                    foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                    backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
                   ),
                   onPressed: () {
                     Navigator.pushNamed(
@@ -54,6 +55,7 @@ class Home extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
+                      color: Colors.black
                     ),
                   ),
                 ),

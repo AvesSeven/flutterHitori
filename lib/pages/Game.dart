@@ -96,9 +96,9 @@ class _GameState extends State<Game> {
               ),
               const SizedBox(height: 25),
               // TODO Grid
-              SizedBox(
-                  child: Grid()
-              ),
+              //SizedBox(
+              //    child: Grid()
+              //),
               const SizedBox(height: 25),
               SizedBox(
                 width: 150.0,
