@@ -1,0 +1,2 @@
+# flutterHitori
+Hitori game
