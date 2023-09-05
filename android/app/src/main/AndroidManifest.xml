@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.compilation_et_dev_mobile">
    <application
-        android:label="compilation_et_dev_mobile"
+        android:label="Hitori"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

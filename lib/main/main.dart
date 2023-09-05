@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       routes: {
         // décrit la liste des routes
         '/': (context) => const Home(),
-        '/game': (context) => const Game(title: 'Game'),
+        '/game': (context) => const Game(title: 'Hitori'),
       },
     );
   }
