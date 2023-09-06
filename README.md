@@ -1,16 +1,17 @@
-# compilation_et_dev_mobile
+# Hitori mobile Game
+*Made by Amandine Carlier and William Denorme*
+### Rules :
+Hitori is played with a grid of squares or cells, with each cell initially containing a number. The game is played by eliminating squares/numbers and this is done by blacking them out. The objective is to transform the grid to a state wherein all three following rules are true:
+- no row or column can have more than one occurrence of any given number
+- black cells cannot be horizontally or vertically adjacent, although they can be diagonal to one another.
+- the remaining numbered cells must be all connected to each other, horizontally or vertically.
 
-Hitori Game
+### Getting Started with the app
 
-## Getting Started
+To run the project on your device
+- Make sure your phone is plugged in onto your computer and that both Flutter and Dark sdk are on your computer
+- Run `flutter devices` and make sure that the device you will use to play the app is listed
+- Run `flutter run lib/main/main.dart` to launch the project
 
-This project is a starting point for a Flutter application.
+Then enjoy :)
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
