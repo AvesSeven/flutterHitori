@@ -1,5 +1,10 @@
+import 'dart:math';
+
 import 'package:compilation_et_dev_mobile/components/Grid.dart';
 import 'package:flutter/material.dart';
+
+import '../components/Cell.dart';
+import '../widget/GridWidget.dart';
 
 class Game extends StatefulWidget {
   const Game({Key? key, required this.title}) : super(key: key);
@@ -11,6 +16,29 @@ class Game extends StatefulWidget {
 }
 
 class _GameState extends State<Game> {
+  late Grid grid;
+
+  void initGrid() {
+    final random = Random();
+    final gridLength = 5;
+
+    final gridData = List.generate(gridLength, (_) {
+      return List.generate(gridLength, (_) {
+        final randomNumber = random.nextInt(gridLength - 1) + 1;
+        return Cell(false, randomNumber);
+      });
+    });
+
+    grid = Grid(gridData, gridLength, false);
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    initGrid();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +56,10 @@ class _GameState extends State<Game> {
                       MaterialStateProperty.all<Color>(Colors.black),
                 ),
                 onPressed: () {
-                  Navigator.pop(context);
+                  Navigator.pushNamed(
+                    context,
+                    '/',
+                  );
                 },
                 child: const Text(
                   'Return',
@@ -78,11 +109,7 @@ class _GameState extends State<Game> {
                         MaterialStateProperty.all<Color>(Colors.black),
                   ),
                   onPressed: () {
-                    // TODO
-                    Navigator.pushNamed(
-                      context,
-                      '/game',
-                    );
+                    initGrid();
                   },
                   child: const Text(
                     'New grid',
@@ -95,10 +122,14 @@ class _GameState extends State<Game> {
                 ),
               ),
               const SizedBox(height: 25),
-              // TODO Grid
-              //SizedBox(
-              //    child: Grid()
-              //),
+              GridWidget(
+                  grid: grid,
+                  onCellTapped: (row, col) {
+                    setState(() {
+                      final cell = grid.grid![row][col];
+                      cell.blackened = !cell.blackened;
+                    });
+                  }),
               const SizedBox(height: 25),
               SizedBox(
                 width: 150.0,
@@ -111,7 +142,6 @@ class _GameState extends State<Game> {
                         MaterialStateProperty.all<Color>(Colors.black),
                   ),
                   onPressed: () {
-                    // TODO
                     Navigator.pushNamed(
                       context,
                       '/game',
