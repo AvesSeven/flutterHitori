@@ -30,6 +30,7 @@ class _GameState extends State<Game> {
     });
 
     grid = Grid(gridData, gridLength, false);
+    setState(() {});
   }
 
   @override
@@ -55,7 +56,10 @@ class _GameState extends State<Game> {
                       MaterialStateProperty.all<Color>(Colors.black),
                 ),
                 onPressed: () {
-                  Navigator.pop(context);
+                  Navigator.pushNamed(
+                    context,
+                    '/',
+                  );
                 },
                 child: const Text(
                   'Return',
@@ -105,10 +109,7 @@ class _GameState extends State<Game> {
                         MaterialStateProperty.all<Color>(Colors.black),
                   ),
                   onPressed: () {
-                    Navigator.pushNamed(
-                      context,
-                      '/game',
-                    );
+                    initGrid();
                   },
                   child: const Text(
                     'New grid',
@@ -121,7 +122,14 @@ class _GameState extends State<Game> {
                 ),
               ),
               const SizedBox(height: 25),
-              GridWidget(grid),
+              GridWidget(
+                  grid: grid,
+                  onCellTapped: (row, col) {
+                    setState(() {
+                      final cell = grid.grid![row][col];
+                      cell.blackened = !cell.blackened;
+                    });
+                  }),
               const SizedBox(height: 25),
               SizedBox(
                 width: 150.0,

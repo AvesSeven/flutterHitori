@@ -4,8 +4,9 @@ import 'package:compilation_et_dev_mobile/components/Cell.dart';
 
 class GridWidget extends StatelessWidget {
   final Grid grid;
+  final Function(int row, int col) onCellTapped;
 
-  GridWidget(this.grid);
+  GridWidget({required this.grid, required this.onCellTapped});
 
   @override
   Widget build(BuildContext context) {
@@ -20,24 +21,26 @@ class GridWidget extends StatelessWidget {
         final col = index % grid.length;
         final cell = grid.grid![row][col];
 
-        final borderColor = Colors.black;
-        final borderWidth = 1.0;
-
-        return Container(
-          decoration: BoxDecoration(
-            border: Border.all(
-            color: borderColor,
-            width: borderWidth,
+        return GestureDetector(
+          onTap: () {
+            onCellTapped(row, col); // Call the callback when tapped
+          },
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: Colors.black,
+                width: 0.1,
+              ),
+              color: cell.blackened ? Colors.black : Colors.white,
             ),
-              color: cell.blackened ? Colors.black : Colors.white
-          ),
-          child: Center(
-            child: Text(
-              cell.number != -1 ? cell.number.toString() : '',
-              style: TextStyle(
-                color: cell.blackened ? Colors.white : Colors.black,
-                fontSize: 20.0,
-                fontWeight: FontWeight.bold,
+            child: Center(
+              child: Text(
+                cell.number != -1 ? cell.number.toString() : '',
+                style: TextStyle(
+                  color: cell.blackened ? Colors.white : Colors.black,
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ),
