@@ -41,72 +41,32 @@ class _GameState extends State<Game> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
-      appBar: AppBar(
+      appBar: new AppBar(
           centerTitle: true,
-          backgroundColor: Colors.white,
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+        title: new Text("Hitori", style: TextStyle(fontSize: 30)),
+          backgroundColor: const Color(0xFF03A9F4),
+          leading: new IconButton(
+          icon: new Icon(Icons.arrow_back),
+          onPressed: () => Navigator.pushNamed(context, '/'),
+          ),
+      ),
+      backgroundColor: Colors.white,
+      body: Column(
             children: [
-              TextButton(
-                style: ButtonStyle(
-                  foregroundColor:
-                      MaterialStateProperty.all<Color>(Colors.white),
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.black),
-                ),
-                onPressed: () {
-                  Navigator.pushNamed(
-                    context,
-                    '/',
-                  );
-                },
-                child: const Text(
-                  'Return',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              Text(
-                widget.title,
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(
-                width: 25,
-              ),
-            ],
-          )),
-      backgroundColor: const Color(0xFF03A9F4),
-      body: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: Align(
-          alignment: Alignment.center,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const SizedBox(
-                height: 25,
-              ),
-              const SizedBox(
-                height: 25,
-              ),
-              SizedBox(
-                width: 150.0,
-                height: 75.0,
+              Container(height: screenHeight * 0.07,),
+              Container(
+                width: screenWidth * 0.3,
+                height: screenHeight * 0.07,
                 child: TextButton(
                   style: ButtonStyle(
                     foregroundColor:
                         MaterialStateProperty.all<Color>(Colors.white),
                     backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.black),
+                        MaterialStateProperty.all<Color>(Colors.blueAccent),
                   ),
                   onPressed: () {
                     initGrid();
@@ -115,31 +75,35 @@ class _GameState extends State<Game> {
                     'New grid',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 24,
+                      fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
               ),
-              const SizedBox(height: 25),
-              GridWidget(
-                  grid: grid,
-                  onCellTapped: (row, col) {
-                    setState(() {
-                      final cell = grid.grid![row][col];
-                      cell.blackened = !cell.blackened;
-                    });
-                  }),
-              const SizedBox(height: 25),
-              SizedBox(
-                width: 150.0,
-                height: 75.0,
+              Container(height: screenHeight * 0.05),
+              Container(
+                width: screenWidth * 0.85,
+                height: screenWidth * 0.85,
+                child: GridWidget(
+                    grid: grid,
+                    onCellTapped: (row, col) {
+                      setState(() {
+                        final cell = grid.grid![row][col];
+                        cell.blackened = !cell.blackened;
+                      });
+                    }),
+              ),
+              Container(height: screenHeight * 0.05),
+              Container(
+                width: screenWidth * 0.3,
+                height: screenHeight * 0.07,
                 child: TextButton(
                   style: ButtonStyle(
                     foregroundColor:
                         MaterialStateProperty.all<Color>(Colors.white),
                     backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.black),
+                        MaterialStateProperty.all<Color>(Colors.blueAccent),
                   ),
                   onPressed: () {
                     Navigator.pushNamed(
@@ -151,17 +115,14 @@ class _GameState extends State<Game> {
                     'Check',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 24,
+                      fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
               ),
-              const SizedBox(height: 25),
             ],
           ),
-        ),
-      ),
-    );
+        );
   }
 }
