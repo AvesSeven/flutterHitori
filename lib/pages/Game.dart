@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:compilation_et_dev_mobile/mockedData/GridsList.dart';
 import 'package:compilation_et_dev_mobile/Utils/Pair.dart';
 import 'package:compilation_et_dev_mobile/components/Grid.dart';
+import 'package:compilation_et_dev_mobile/widget/PopupWidget.dart';
 import 'package:flutter/material.dart';
 
 import '../components/Cell.dart';
@@ -194,9 +195,11 @@ class _GameState extends State<Game> {
                     MaterialStateProperty.all<Color>(Colors.blueAccent),
               ),
               onPressed: () {
-                Navigator.pushNamed(
-                  context,
-                  '/game',
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return PopupWidget(checkGrid());
+                  },
                 );
               },
               child: const Text(
