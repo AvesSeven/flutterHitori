@@ -16,7 +16,27 @@ class Home extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Container(height: screenHeight * 0.3),
+          Container(height: screenHeight * 0.02),
+          Row(children: [
+            Container(height: screenHeight * 0.05, width: screenWidth * 0.84),
+            Container(
+              width: screenWidth * 0.13,
+              height: screenHeight * 0.13,
+              child: IconButton(
+                icon: Icon(Icons.question_mark),
+                color: Colors.white,
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return PopupWidget(null, popupType: PopupType.gameRule);
+                    },
+                  );
+                },
+              )
+            ),
+          ]),
+          Container(height: screenHeight * 0.14),
           const Text(
             "Hitori",
             textAlign: TextAlign.center,

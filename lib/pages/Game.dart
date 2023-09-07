@@ -10,9 +10,7 @@ import '../components/Cell.dart';
 import '../widget/GridWidget.dart';
 
 class Game extends StatefulWidget {
-  const Game({Key? key, required this.title}) : super(key: key);
-
-  final String title;
+  const Game({Key? key}) : super(key: key);
 
   @override
   State<Game> createState() => _GameState();
@@ -134,14 +132,32 @@ class _GameState extends State<Game> {
     double screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      appBar: new AppBar(
+      appBar: AppBar(
         centerTitle: true,
         title: new Text("Hitori", style: TextStyle(fontSize: 30)),
         backgroundColor: const Color(0xFF03A9F4),
-        leading: new IconButton(
-          icon: new Icon(Icons.arrow_back),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
           onPressed: () => Navigator.pushNamed(context, '/'),
         ),
+        actions: [
+          Container(
+              width: screenWidth * 0.13,
+              height: screenHeight * 0.13,
+              child: IconButton(
+                icon: Icon(Icons.question_mark),
+                color: Colors.white,
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return PopupWidget(null, popupType: PopupType.gameRule);
+                    },
+                  );
+                },
+              )
+          ),
+        ],
       ),
       backgroundColor: Colors.white,
       body: Column(
@@ -198,7 +214,7 @@ class _GameState extends State<Game> {
                 showDialog(
                   context: context,
                   builder: (BuildContext context) {
-                    return PopupWidget(checkGrid());
+                    return PopupWidget(checkGrid(), popupType: PopupType.checkMessage);
                   },
                 );
               },
