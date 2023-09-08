@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../pages/Game.dart';
-import '../pages/Home.dart';
+import 'pages/Game.dart';
+import 'pages/Home.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       routes: {
         // décrit la liste des routes
         '/': (context) => const Home(),
-        '/game': (context) => const Game(title: 'Hitori'),
+        '/game': (context) => const Game(),
       },
     );
   }
