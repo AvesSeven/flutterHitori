@@ -250,6 +250,9 @@ class _GameState extends State<Game> {
                   ),
                 ),
               ),
+              Container(
+                height: screenHeight * 0.07,
+              ),
             ],
           ),
         ));
