@@ -11,7 +11,7 @@ Hitori is played with a grid of squares or cells, with each cell initially conta
 To run the project on your device
 - Make sure your phone is plugged in onto your computer and that both Flutter and Dark sdk are on your computer
 - Run `flutter devices` and make sure that the device you will use to play the app is listed
-- Run `flutter run lib/main/main.dart` to launch the project
+- Run `flutter run` to launch the project
 
 Then enjoy :)
 
