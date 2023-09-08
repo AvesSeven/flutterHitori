@@ -151,7 +151,7 @@ class _GameState extends State<Game> {
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
-                      return PopupWidget(null, popupType: PopupType.gameRule);
+                      return PopupWidget.forRules(popupType: PopupType.gameRule);
                     },
                   );
                 },

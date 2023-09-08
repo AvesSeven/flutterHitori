@@ -8,6 +8,8 @@ class PopupWidget extends StatelessWidget {
 
   PopupWidget(this._won, {required this.popupType});
 
+  PopupWidget.forRules({required this.popupType});
+
   @override
   Widget build(BuildContext context) {
     switch (popupType) {
