@@ -11,7 +11,7 @@ class Home extends StatelessWidget {
     double screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
-        backgroundColor: const Color(0xFF03A9F4),
+        backgroundColor: Colors.blueAccent,
         body: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,

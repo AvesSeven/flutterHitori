@@ -5,6 +5,7 @@ import 'package:compilation_et_dev_mobile/Utils/Pair.dart';
 import 'package:compilation_et_dev_mobile/components/Grid.dart';
 import 'package:compilation_et_dev_mobile/widget/PopupWidget.dart';
 import 'package:flutter/material.dart';
+import 'package:stop_watch_timer/stop_watch_timer.dart';
 
 import '../components/Cell.dart';
 import '../widget/GridWidget.dart';
@@ -17,6 +18,8 @@ class Game extends StatefulWidget {
 }
 
 class _GameState extends State<Game> {
+  final StopWatchTimer _stopWatchTimer =
+      StopWatchTimer(mode: StopWatchMode.countUp);
   late Grid grid;
   static List<Pair> visited = [];
 
@@ -61,7 +64,7 @@ class _GameState extends State<Game> {
         }
       }
     }
-    return isConnexe();
+    return isRelated();
   }
 
   // Regarde s'il y a d'autre case noire autour d'une case en particulier
@@ -133,7 +136,7 @@ class _GameState extends State<Game> {
   }
 
   // Permet de s'assurer qu'il n'y a qu'un seul "groupe" de cases blanches
-  bool isConnexe() {
+  bool isRelated() {
     visited = [];
     for (int i = 0; i < grid.length; i++) {
       for (int j = 0; j < grid.length; j++) {
@@ -149,21 +152,34 @@ class _GameState extends State<Game> {
   }
 
   @override
+  void dispose() async {
+    super.dispose();
+    await _stopWatchTimer.dispose();
+  }
+
+  void resetTimer() {
+    this._stopWatchTimer.onStopTimer();
+    this._stopWatchTimer.onResetTimer();
+    this._stopWatchTimer.onStartTimer();
+  }
+
+  @override
   void initState() {
     super.initState();
     initGrid();
   }
 
-  @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
+    this._stopWatchTimer.onStartTimer();
 
     return Scaffold(
         appBar: AppBar(
+          elevation: 0,
           centerTitle: true,
           title: new Text("Hitori", style: TextStyle(fontSize: 30)),
-          backgroundColor: const Color(0xFF03A9F4),
+          backgroundColor: Colors.blueAccent,
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: () => Navigator.pushNamed(context, '/'),
@@ -192,32 +208,36 @@ class _GameState extends State<Game> {
           child: Column(
             children: [
               Container(
-                height: screenHeight * 0.07,
+                height: screenHeight * 0.05,
               ),
               Container(
-                width: screenWidth * 0.3,
+                width: screenWidth * 0.4,
                 height: screenHeight * 0.07,
-                child: TextButton(
-                  style: ButtonStyle(
-                    foregroundColor:
-                        MaterialStateProperty.all<Color>(Colors.white),
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.blueAccent),
-                  ),
-                  onPressed: () {
-                    initGrid();
+                decoration: BoxDecoration(
+                    color: Colors.orangeAccent,
+                    borderRadius: BorderRadius.circular(10)),
+                child: StreamBuilder<int>(
+                  stream: _stopWatchTimer.secondTime,
+                  initialData: 0,
+                  builder: (context, snap) {
+                    final value = snap.data;
+                    return Container(
+                      alignment: Alignment.center,
+                      child: Text(
+                        value.toString(),
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 30,
+                            fontFamily: 'Helvetica',
+                            fontWeight: FontWeight.bold),
+                      ),
+                    );
                   },
-                  child: const Text(
-                    'New grid',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
                 ),
               ),
-              Container(height: screenHeight * 0.05),
+              Container(
+                height: screenHeight * 0.05,
+              ),
               Container(
                 width: screenWidth * 0.85,
                 height: screenWidth * 0.85,
@@ -231,34 +251,65 @@ class _GameState extends State<Game> {
                     }),
               ),
               Container(height: screenHeight * 0.05),
-              Container(
-                width: screenWidth * 0.3,
-                height: screenHeight * 0.07,
-                child: TextButton(
-                  style: ButtonStyle(
-                    foregroundColor:
-                        MaterialStateProperty.all<Color>(Colors.white),
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.blueAccent),
-                  ),
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return PopupWidget(checkGrid(),
-                            popupType: PopupType.checkMessage);
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    width: screenWidth * 0.3,
+                    height: screenHeight * 0.07,
+                    child: TextButton(
+                      style: ButtonStyle(
+                        foregroundColor:
+                            MaterialStateProperty.all<Color>(Colors.white),
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.blueAccent),
+                      ),
+                      onPressed: () {
+                        initGrid();
+                        resetTimer();
                       },
-                    );
-                  },
-                  child: const Text(
-                    'Check',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+                      child: const Text(
+                        'New grid',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                  Container(width: screenWidth * 0.1),
+                  Container(
+                    width: screenWidth * 0.3,
+                    height: screenHeight * 0.07,
+                    child: TextButton(
+                      style: ButtonStyle(
+                        foregroundColor:
+                            MaterialStateProperty.all<Color>(Colors.white),
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.blueAccent),
+                      ),
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return PopupWidget(checkGrid(),
+                                popupType: PopupType.checkMessage);
+                          },
+                        );
+                      },
+                      child: const Text(
+                        'Check',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
               Container(
                 height: screenHeight * 0.07,
