@@ -27,12 +27,14 @@ class _GameState extends State<Game> {
 
     final randomGrid = random.nextInt(gridsList.grids.length);
 
+    // Instancie une grille avec une valeur aberrante
     final gridData = List.generate(gridLength, (_) {
       return List.generate(gridLength, (_) {
         return Cell(false, -1);
       });
     });
 
+    // Utilise la grille récupérer dans GridsList pour générer une grille résolvable
     for (int i = 0; i < gridLength; i++) {
       for (int j = 0; j < gridLength; j++) {
         gridData[i][j] = Cell(false, gridsList.grids[randomGrid][i][j]);
@@ -43,6 +45,7 @@ class _GameState extends State<Game> {
     setState(() {});
   }
 
+  // Permet de dire si le joueur a gagné ou non
   bool checkGrid() {
     for (int i = 0; i < grid.length; i++) {
       for (int j = 0; j < grid.length; j++) {
@@ -61,6 +64,7 @@ class _GameState extends State<Game> {
     return isConnexe();
   }
 
+  // Regarde s'il y a d'autre case noire autour d'une case en particulier
   bool hasBlackenedCellAround(int i, int j) {
     bool cellBlackenedUp = (i - 1 >= 0) && grid.grid![i - 1][j].blackened;
     bool cellBlackenedDown =
@@ -75,6 +79,7 @@ class _GameState extends State<Game> {
         cellBlackenedLeft;
   }
 
+  // Regarde s'il y a le numéro d'une case particulière sur la même ligne ou la même colonne
   bool hasSiblingsOnSameAxes(int i, int j, int number) {
     for (int k = 0; k < grid.length; k++) {
       if ((k != i) &&
@@ -95,6 +100,7 @@ class _GameState extends State<Game> {
     return false;
   }
 
+  // Compte le nombre de cellules connectées (en récursif)
   static int nbOfConnexeCells(Grid grid, int i, int j) {
     if ((i < 0) ||
         (i >= grid.length) ||
@@ -113,6 +119,7 @@ class _GameState extends State<Game> {
     }
   }
 
+  // Compte le nombre de cellules noires
   int nbOfBlackenedCells() {
     int nbCells = 0;
     for (int i = 0; i < grid.length; i++) {
@@ -125,11 +132,14 @@ class _GameState extends State<Game> {
     return nbCells;
   }
 
+  // Permet de s'assurer qu'il n'y a qu'un seul "groupe" de cases blanches
   bool isConnexe() {
     visited = [];
     for (int i = 0; i < grid.length; i++) {
       for (int j = 0; j < grid.length; j++) {
         if (!(grid.grid![i][j].blackened)) {
+          // Pour s'assurer qu'il n'y ait qu'un seul groupe,
+          // on additionne le nombre de cellules noires avec le nombre de cellules blanches connexes
           return (nbOfConnexeCells(grid, i, j) + nbOfBlackenedCells()) ==
               (grid.length * grid.length);
         }
