@@ -163,6 +163,14 @@ class _GameState extends State<Game> {
     this._stopWatchTimer.onStartTimer();
   }
 
+  void stopTimer() {
+    this._stopWatchTimer.onStopTimer();
+  }
+
+  void startTimer() {
+    this._stopWatchTimer.onStartTimer();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -195,8 +203,7 @@ class _GameState extends State<Game> {
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {
-                        return PopupWidget.forRules(
-                            popupType: PopupType.gameRule);
+                        return PopupWidget.rules(popupType: PopupType.gameRule);
                       },
                     );
                   },
@@ -291,11 +298,19 @@ class _GameState extends State<Game> {
                             MaterialStateProperty.all<Color>(Colors.blueAccent),
                       ),
                       onPressed: () {
+                        stopTimer();
                         showDialog(
+                          barrierDismissible: false,
                           context: context,
                           builder: (BuildContext context) {
-                            return PopupWidget(checkGrid(),
-                                popupType: PopupType.checkMessage);
+                            return PopupWidget.gameCheckWithAction(checkGrid(),
+                                () {
+                              startTimer();
+                              if (checkGrid() == true) {
+                                initGrid();
+                                resetTimer();
+                              }
+                            }, popupType: PopupType.checkMessage);
                           },
                         );
                       },

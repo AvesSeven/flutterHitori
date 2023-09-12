@@ -31,7 +31,7 @@ class Home extends StatelessWidget {
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {
-                            return PopupWidget.forRules(
+                            return PopupWidget.rules(
                                 popupType: PopupType.gameRule);
                           },
                         );

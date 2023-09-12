@@ -5,10 +5,12 @@ enum PopupType { gameRule, checkMessage }
 class PopupWidget extends StatelessWidget {
   PopupType popupType;
   bool? _won;
+  Function()? action;
 
-  PopupWidget(this._won, {required this.popupType});
-
-  PopupWidget.forRules({required this.popupType});
+  PopupWidget.gameCheck(this._won, {required this.popupType});
+  PopupWidget.gameCheckWithAction(this._won, this.action, {required this.popupType});
+  PopupWidget.rules({required this.popupType});
+  PopupWidget.rulesWithAction(this.action, {required this.popupType});
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +31,10 @@ class PopupWidget extends StatelessWidget {
             ),
             actions: [
               TextButton(
-                  onPressed: () => Navigator.pop(context, 'Cancel'),
+                  onPressed: () {
+                    Navigator.pop(context, 'Cancel');
+                    action!();
+                  },
                   child: const Text('Ok'))
             ],
           );
@@ -48,7 +53,10 @@ class PopupWidget extends StatelessWidget {
             ),
             actions: [
               TextButton(
-                  onPressed: () => Navigator.pop(context, 'Cancel'),
+                  onPressed: () {
+                    Navigator.pop(context, 'Cancel');
+                    action!();
+                  },
                   child: const Text('Ok'))
             ],
           );
@@ -67,7 +75,10 @@ class PopupWidget extends StatelessWidget {
             ),
             actions: [
               TextButton(
-                  onPressed: () => Navigator.pop(context, 'cancel'),
+                  onPressed: () {
+                    Navigator.pop(context, 'Cancel');
+                    action!();
+                  },
                   child: const Text('Ok'))
             ],
           );
@@ -87,7 +98,10 @@ class PopupWidget extends StatelessWidget {
           ),
           actions: [
             TextButton(
-                onPressed: () => Navigator.pop(context, 'cancel'),
+                onPressed: () {
+                  Navigator.pop(context, 'Cancel');
+                  action!();
+                },
                 child: const Text('Ok'))
           ],
         );
