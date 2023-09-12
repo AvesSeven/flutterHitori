@@ -34,9 +34,19 @@ Avec plus de temps, nous aurions aimé pouvoir générer des grilles de manière
 Malheuseument, pour valider la faisabilité de cette grille, il aurait fallu mettre en place un "solveur" capable de résoudre cette première. 
 
 Grille simple valide : 
+<<<<<<< HEAD
 1 2 3 4 5
 2 3 4 5 1
 3 4 5 1 2
+=======
+
+1 2 3 4 5
+
+2 3 4 5 1
+
+3 4 5 1 2
+
+>>>>>>> 4903b9742c6004ca5ccf070b6dceb8abefedc4df
 4 5 1 2 3
 
 Au départ, sans cette logique de grille d'initialisation et de doublons, nous avons essayé de mettre en place un solveur, cependant nous n'obtenions pas de résultat, le nombre de combinaisons de grille étant trop important (nous avons donc perdu beaucoup de temps sur cet aspect).
